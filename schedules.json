@@ -1,0 +1,19 @@
+{
+  "schedules": [
+    {
+      "id": 1,
+      "account_username": "formindsinone",
+      "video_path": "accounts/formindsinone/videos/your_video.mp4",
+      "caption": null,
+      "scheduled_time": "2025-06-24 20:30",
+      "status": "pending",
+      "created_at": "2025-06-24 20:24:58"
+    }
+  ],
+  "schedule_settings": {
+    "min_delay_between_concurrent": 300,
+    "max_delay_between_concurrent": 600,
+    "time_format": "%Y-%m-%d %H:%M:%S",
+    "timezone": "Asia/Seoul"
+  }
+}

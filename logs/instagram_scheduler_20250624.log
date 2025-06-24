@@ -1,0 +1,24 @@
+2025-06-24 20:36:47,780 - INFO - 🎯 계정 처리 시작: formindsinone
+2025-06-24 20:36:47,782 - INFO - 💫 기존 세션 파일 발견, 로드 시도 중... (formindsinone)
+2025-06-24 20:36:48,786 - INFO - https://i.instagram.com/api/v1/feed/timeline/
+2025-06-24 20:36:54,497 - INFO - formindsinone [200] POST https://i.instagram.com/api/v1/feed/timeline/ (269.0.0.18.75, OnePlus 6T Dev)
+2025-06-24 20:36:54,518 - INFO - ✅ 기존 세션으로 로그인 성공: formindsinone
+2025-06-24 20:36:54,521 - INFO - 🎬 비디오 업로드 시작: your_video.mp4
+2025-06-24 20:36:54,521 - INFO - ⏳ 업로드 전 9.6초 대기 중...
+2025-06-24 20:37:04,133 - ERROR - ❌ 업로드 실패: Please install moviepy>=1.0.3 and retry
+2025-06-24 20:37:04,133 - ERROR - ❌ 비디오 업로드 실패 (your_video.mp4): Please install moviepy>=1.0.3 and retry
+2025-06-24 20:41:37,759 - INFO - 🎯 계정 처리 시작: formindsinone
+2025-06-24 20:41:37,764 - INFO - 💫 기존 세션 파일 발견, 로드 시도 중... (formindsinone)
+2025-06-24 20:41:38,767 - INFO - https://i.instagram.com/api/v1/feed/timeline/
+2025-06-24 20:41:44,044 - INFO - formindsinone [200] POST https://i.instagram.com/api/v1/feed/timeline/ (269.0.0.18.75, OnePlus 6T Dev)
+2025-06-24 20:41:44,059 - INFO - ✅ 기존 세션으로 로그인 성공: formindsinone
+2025-06-24 20:41:44,062 - INFO - 🎬 비디오 업로드 시작: your_video.mp4
+2025-06-24 20:41:44,062 - INFO - ⏳ 업로드 전 14.6초 대기 중...
+2025-06-24 20:42:03,938 - INFO - formindsinone [200] GET https://i.instagram.com/rupload_igvideo/1750765318696_0_7063407903 (269.0.0.18.75, OnePlus 6T Dev)
+2025-06-24 20:42:06,329 - INFO - formindsinone [200] POST https://i.instagram.com/rupload_igvideo/1750765318696_0_7063407903 (269.0.0.18.75, OnePlus 6T Dev)
+2025-06-24 20:42:17,619 - INFO - formindsinone [200] POST https://i.instagram.com/rupload_igphoto/1750765318696_0_2876001465 (269.0.0.18.75, OnePlus 6T Dev)
+2025-06-24 20:42:18,624 - INFO - https://i.instagram.com/api/v1/media/configure_to_clips/?video=1
+2025-06-24 20:42:25,076 - INFO - formindsinone [200] POST https://i.instagram.com/api/v1/media/configure_to_clips/?video=1 (269.0.0.18.75, OnePlus 6T Dev)
+2025-06-24 20:42:26,081 - INFO - https://i.instagram.com/api/v1/qe/expose/
+2025-06-24 20:42:26,239 - INFO - formindsinone [200] POST https://i.instagram.com/api/v1/qe/expose/ (269.0.0.18.75, OnePlus 6T Dev)
+2025-06-24 20:42:26,259 - INFO - ✅ 업로드 완료! Media ID: 3662007419869869569
