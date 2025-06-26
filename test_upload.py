@@ -116,29 +116,29 @@ class InstagramUploader:
         # 프록시 설정
         if proxy:
             cl.set_proxy(proxy)
-            self.logger.info(f"✅ 프록시 설정 완료: {proxy}")
+            self.logger.info(f" 프록시 설정 완료: {proxy}")
 
         try:
             # 기존 세션 불러오기 시도
             if session_path.exists():
-                self.logger.info(f"💫 기존 세션 파일 발견, 로드 시도 중... ({username})")
+                self.logger.info(f" 기존 세션 파일 발견, 로드 시도 중... ({username})")
                 cl.load_settings(session_path)
                 cl.login(username, password)
 
                 # 세션 유효성 검증
                 try:
                     cl.get_timeline_feed()
-                    self.logger.info(f"✅ 기존 세션으로 로그인 성공: {username}")
+                    self.logger.info(f" 기존 세션으로 로그인 성공: {username}")
                 except Exception:
-                    self.logger.warning(f"⚠️ 세션이 만료되어 재로그인 시도 중... ({username})")
+                    self.logger.warning(f" 세션이 만료되어 재로그인 시도 중... ({username})")
                     cl.login(username, password)
                     cl.dump_settings(session_path)
-                    self.logger.info(f"✅ 재로그인 성공: {username}")
+                    self.logger.info(f" 재로그인 성공: {username}")
             else:
-                self.logger.info(f"🔄 새로운 세션으로 로그인 시도 중... ({username})")
+                self.logger.info(f" 새로운 세션으로 로그인 시도 중... ({username})")
                 cl.login(username, password)
                 cl.dump_settings(session_path)
-                self.logger.info(f"✅ 새로운 세션으로 로그인 성공: {username}")
+                self.logger.info(f" 새로운 세션으로 로그인 성공: {username}")
 
             # 세션 정보 저장
             session_info = {
@@ -150,9 +150,9 @@ class InstagramUploader:
                 json.dump(session_info, f, ensure_ascii=False, indent=2)
 
         except Exception as e:
-            self.logger.error(f"❌ 로그인 실패 ({username}): {str(e)}")
+            self.logger.error(f" 로그인 실패 ({username}): {str(e)}")
             if session_path.exists():
-                self.logger.info(f"🗑️ 오류로 인해 기존 세션 파일 삭제 ({username})")
+                self.logger.info(f" 오류로 인해 기존 세션 파일 삭제 ({username})")
                 session_path.unlink()
             raise
 
@@ -175,14 +175,14 @@ class InstagramUploader:
                 caption,
                 thumbnail=None  # 썸네일 자동 생성
             )
-            self.logger.info(f"✅ 업로드 완료! Media ID: {media.pk}")
+            self.logger.info(f" 업로드 완료! Media ID: {media.pk}")
 
             # 업로드된 파일 이동 또는 표시
             uploaded_mark = video_path + ".uploaded"
             Path(uploaded_mark).touch()
 
         except Exception as e:
-            self.logger.error(f"❌ 업로드 실패: {str(e)}")
+            self.logger.error(f" 업로드 실패: {str(e)}")
             raise
 
     def process_account(self, account: Dict) -> None:
@@ -199,16 +199,16 @@ class InstagramUploader:
             uploads = self._get_video_and_caption(account)
 
             if not uploads:
-                self.logger.info(f"⚠️ 업로드할 비디오가 없습니다. ({account['username']})")
+                self.logger.info(f" 업로드할 비디오가 없습니다. ({account['username']})")
                 return
 
             # 각 비디오 업로드
             for video_path, caption in uploads:
                 try:
-                    self.logger.info(f"🎬 비디오 업로드 시작: {os.path.basename(video_path)}")
+                    self.logger.info(f" 비디오 업로드 시작: {os.path.basename(video_path)}")
                     self.upload_video(client, video_path, caption)
                 except Exception as e:
-                    self.logger.error(f"❌ 비디오 업로드 실패 ({os.path.basename(video_path)}): {str(e)}")
+                    self.logger.error(f" 비디오 업로드 실패 ({os.path.basename(video_path)}): {str(e)}")
                     continue
 
                 # 비디오 간 딜레이
@@ -217,16 +217,16 @@ class InstagramUploader:
                         self.upload_settings["min_delay_between_uploads"],
                         self.upload_settings["max_delay_between_uploads"]
                     )
-                    self.logger.info(f"⏳ 다음 비디오 업로드까지 {delay:.1f}초 대기...")
+                    self.logger.info(f" 다음 비디오 업로드까지 {delay:.1f}초 대기...")
                     time.sleep(delay)
 
         except Exception as e:
-            self.logger.error(f"❌ 계정 처리 실패 ({account['username']}): {str(e)}")
+            self.logger.error(f" 계정 처리 실패 ({account['username']}): {str(e)}")
 
     def process_all_accounts(self) -> None:
         """모든 계정 순차 처리"""
         for account in self.accounts:
-            self.logger.info(f"🎯 계정 처리 시작: {account['username']}")
+            self.logger.info(f" 계정 처리 시작: {account['username']}")
             try:
                 self.process_account(account)
 
@@ -236,11 +236,11 @@ class InstagramUploader:
                         self.upload_settings["min_delay_between_uploads"],
                         self.upload_settings["max_delay_between_uploads"]
                     )
-                    self.logger.info(f"⏳ 다음 계정 처리까지 {delay:.1f}초 대기...")
+                    self.logger.info(f" 다음 계정 처리까지 {delay:.1f}초 대기...")
                     time.sleep(delay)
 
             except Exception as e:
-                self.logger.error(f"❌ 계정 처리 중 오류 발생: {str(e)}")
+                self.logger.error(f" 계정 처리 중 오류 발생: {str(e)}")
                 continue  # 다음 계정으로 진행
 
     def process_scheduled_uploads(self) -> None:
@@ -249,7 +249,7 @@ class InstagramUploader:
 
         for schedule in pending_uploads:
             try:
-                self.logger.info(f"🎯 예약된 업로드 처리 시작 (ID: {schedule['id']})")
+                self.logger.info(f" 예약된 업로드 처리 시작 (ID: {schedule['id']})")
 
                 # 계정 찾기
                 account = next(
@@ -259,14 +259,14 @@ class InstagramUploader:
 
                 if not account:
                     error_msg = f"계정을 찾을 수 없음: {schedule['account_username']}"
-                    self.logger.error(f"❌ {error_msg}")
+                    self.logger.error(f" {error_msg}")
                     self.scheduler.mark_schedule_failed(schedule["id"], error_msg)
                     continue
 
                 # 비디오 파일 존재 확인
                 if not os.path.exists(schedule["video_path"]):
                     error_msg = f"비디오 파일을 찾을 수 없음: {schedule['video_path']}"
-                    self.logger.error(f"❌ {error_msg}")
+                    self.logger.error(f" {error_msg}")
                     self.scheduler.mark_schedule_failed(schedule["id"], error_msg)
                     continue
 
@@ -293,12 +293,12 @@ class InstagramUploader:
                         self.upload_settings["min_delay_between_uploads"],
                         self.upload_settings["max_delay_between_uploads"]
                     )
-                    self.logger.info(f"⏳ 다음 예약 업로드까지 {delay:.1f}초 대기...")
+                    self.logger.info(f" 다음 예약 업로드까지 {delay:.1f}초 대기...")
                     time.sleep(delay)
 
             except Exception as e:
                 error_msg = str(e)
-                self.logger.error(f"❌ 예약 업로드 실패 (ID: {schedule['id']}): {error_msg}")
+                self.logger.error(f" 예약 업로드 실패 (ID: {schedule['id']}): {error_msg}")
                 self.scheduler.mark_schedule_failed(schedule["id"], error_msg)
 
 def main():
@@ -314,7 +314,7 @@ def main():
 
     except Exception as e:
         logger = logging.getLogger(__name__)
-        logger.error(f"❌ 메인 프로세스 오류: {str(e)}")
+        logger.error(f" 메인 프로세스 오류: {str(e)}")
 
 if __name__ == "__main__":
     main()

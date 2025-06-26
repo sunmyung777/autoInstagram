@@ -27,7 +27,7 @@ def run_scheduler():
     logger = setup_logging()
     uploader = InstagramUploader()
 
-    logger.info("✅ 스케줄러 데몬이 시작되었습니다.")
+    logger.info(" 스케줄러 데몬이 시작되었습니다.")
 
     try:
         while True:
@@ -39,12 +39,12 @@ def run_scheduler():
                 time.sleep(60)
 
             except Exception as e:
-                logger.error(f"❌ 예약 처리 중 오류 발생: {str(e)}")
+                logger.error(f" 예약 처리 중 오류 발생: {str(e)}")
                 # 오류 발생 시 5분 대기 후 재시도
                 time.sleep(300)
 
     except KeyboardInterrupt:
-        logger.info("👋 스케줄러 데몬이 종료됩니다.")
+        logger.info(" 스케줄러 데몬이 종료됩니다.")
 
 if __name__ == "__main__":
     run_scheduler()

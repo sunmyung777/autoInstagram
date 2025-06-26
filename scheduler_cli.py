@@ -271,18 +271,18 @@ def list_schedules(args, scheduler: InstagramScheduler) -> None:
         print(format_schedule_table(schedules))
 
     except Exception as e:
-        logger.error(f"❌ 스케줄 목록 조회 실패: {str(e)}")
+        logger.error(f" 스케줄 목록 조회 실패: {str(e)}")
 
 def cancel_schedule(args, scheduler: InstagramScheduler) -> None:
     """업로드 일정 취소"""
     try:
         if scheduler.cancel_schedule(args.id):
-            logger.info(f"✅ 업로드 일정이 취소되었습니다. (ID: {args.id})")
+            logger.info(f" 업로드 일정이 취소되었습니다. (ID: {args.id})")
         else:
-            logger.error(f"❌ 일정 취소 실패 (ID: {args.id})")
+            logger.error(f" 일정 취소 실패 (ID: {args.id})")
 
     except Exception as e:
-        logger.error(f"❌ 스케줄 취소 실패: {str(e)}")
+        logger.error(f" 스케줄 취소 실패: {str(e)}")
 
 def main():
     parser = argparse.ArgumentParser(description="Instagram 업로드 스케줄러 CLI")
@@ -321,7 +321,7 @@ def main():
             parser.print_help()
 
     except Exception as e:
-        logger.error(f"❌ CLI 실행 중 오류 발생: {str(e)}")
+        logger.error(f" CLI 실행 중 오류 발생: {str(e)}")
 
 if __name__ == "__main__":
     main()

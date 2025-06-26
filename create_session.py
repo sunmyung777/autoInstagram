@@ -76,10 +76,10 @@ class InstagramSessionCreator:
         # 프록시 설정
         if proxy:
             cl.set_proxy(proxy)
-            self.logger.info(f"✅ 프록시 설정 완료: {proxy}")
+            self.logger.info(f"프록시 설정 완료: {proxy}")
 
         try:
-            self.logger.info(f"🔄 로그인 시도 중... ({username})")
+            self.logger.info(f"로그인 시도 중... ({username})")
             cl.login(username, password)
 
             # 세션 저장
@@ -94,11 +94,11 @@ class InstagramSessionCreator:
             with open(session_path.with_suffix('.info'), 'w', encoding='utf-8') as f:
                 json.dump(session_info, f, ensure_ascii=False, indent=2)
 
-            self.logger.info(f"✅ 세션 생성 및 저장 완료: {username}")
+            self.logger.info(f" 세션 생성 및 저장 완료: {username}")
             return True
 
         except Exception as e:
-            self.logger.error(f"❌ 세션 생성 실패 ({username}): {str(e)}")
+            self.logger.error(f" 세션 생성 실패 ({username}): {str(e)}")
             if session_path.exists():
                 session_path.unlink()
             return False

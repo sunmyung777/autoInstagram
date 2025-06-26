@@ -80,11 +80,11 @@ class InstagramScheduler:
 
             self.schedules["schedules"].append(schedule)
             self._save_schedules()
-            self.logger.info(f"✅ 새로운 업로드 일정이 추가되었습니다. (ID: {schedule['id']})")
+            self.logger.info(f" 새로운 업로드 일정이 추가되었습니다. (ID: {schedule['id']})")
             return schedule
 
         except ValueError as e:
-            self.logger.error(f"❌ 일정 추가 실패: {str(e)}")
+            self.logger.error(f" 일정 추가 실패: {str(e)}")
             raise
 
     def get_schedules(self, account_username: Optional[str] = None,
@@ -106,13 +106,13 @@ class InstagramScheduler:
                 if schedule["status"] == "pending":
                     schedule["status"] = "cancelled"
                     self._save_schedules()
-                    self.logger.info(f"✅ 업로드 일정이 취소되었습니다. (ID: {schedule_id})")
+                    self.logger.info(f" 업로드 일정이 취소되었습니다. (ID: {schedule_id})")
                     return True
                 else:
-                    self.logger.warning(f"⚠️ 이미 처리된 일정은 취소할 수 없습니다. (ID: {schedule_id})")
+                    self.logger.warning(f" 이미 처리된 일정은 취소할 수 없습니다. (ID: {schedule_id})")
                     return False
 
-        self.logger.error(f"❌ 일정을 찾을 수 없습니다. (ID: {schedule_id})")
+        self.logger.error(f" 일정을 찾을 수 없습니다. (ID: {schedule_id})")
         return False
 
     def get_pending_uploads(self) -> List[Dict]:
@@ -141,10 +141,10 @@ class InstagramScheduler:
                 schedule["status"] = "completed"
                 schedule["completed_at"] = datetime.now(self.timezone).strftime("%Y-%m-%d %H:%M:%S")
                 self._save_schedules()
-                self.logger.info(f"✅ 업로드 완료 처리되었습니다. (ID: {schedule_id})")
+                self.logger.info(f" 업로드 완료 처리되었습니다. (ID: {schedule_id})")
                 return
 
-        self.logger.error(f"❌ 일정을 찾을 수 없습니다. (ID: {schedule_id})")
+        self.logger.error(f" 일정을 찾을 수 없습니다. (ID: {schedule_id})")
 
     def mark_schedule_failed(self, schedule_id: int, error_message: str) -> None:
         """업로드 실패 처리"""
@@ -154,7 +154,7 @@ class InstagramScheduler:
                 schedule["error_message"] = error_message
                 schedule["failed_at"] = datetime.now(self.timezone).strftime("%Y-%m-%d %H:%M:%S")
                 self._save_schedules()
-                self.logger.info(f"⚠️ 업로드 실패 처리되었습니다. (ID: {schedule_id})")
+                self.logger.info(f" 업로드 실패 처리되었습니다. (ID: {schedule_id})")
                 return
 
-        self.logger.error(f"❌ 일정을 찾을 수 없습니다. (ID: {schedule_id})")
+        self.logger.error(f" 일정을 찾을 수 없습니다. (ID: {schedule_id})")
