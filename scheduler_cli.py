@@ -222,7 +222,7 @@ def add_schedule(args, scheduler: InstagramScheduler, config: dict) -> None:
             None
         )
         if not account:
-            logger.error(f"❌ 계정을 찾을 수 없습니다: {args.username}")
+            logger.error(f" 계정을 찾을 수 없습니다: {args.username}")
             return
 
         # 비디오 파일 경로 설정
@@ -230,7 +230,7 @@ def add_schedule(args, scheduler: InstagramScheduler, config: dict) -> None:
         video_path = os.path.join(video_dir, args.video)
 
         if not os.path.exists(video_path):
-            logger.error(f"❌ 비디오 파일을 찾을 수 없습니다: {video_path}")
+            logger.error(f" 비디오 파일을 찾을 수 없습니다: {video_path}")
             return
 
         # 캡션 파일 확인 (옵션)
@@ -243,9 +243,9 @@ def add_schedule(args, scheduler: InstagramScheduler, config: dict) -> None:
                 with open(caption_path, 'r', encoding='utf-8') as f:
                     caption = f.read().strip()
             else:
-                logger.warning(f"⚠️ 캡션 파일을 찾을 수 없습니다: {caption_path}")
+                logger.warning(f" 캡션 파일을 찾을 수 없습니다: {caption_path}")
                 tags = " ".join(account.get("default_tags", []))
-                caption = f"📱 {os.path.splitext(args.video)[0]}\n\n{tags}"
+                caption = f" {os.path.splitext(args.video)[0]}\n\n{tags}"
 
         # 스케줄 추가
         schedule = scheduler.add_schedule(
@@ -255,11 +255,11 @@ def add_schedule(args, scheduler: InstagramScheduler, config: dict) -> None:
             caption=caption
         )
 
-        logger.info("✅ 새로운 업로드 일정이 추가되었습니다:")
+        logger.info(" 새로운 업로드 일정이 추가되었습니다:")
         print(format_schedule_table([schedule]))
 
     except Exception as e:
-        logger.error(f"❌ 스케줄 추가 실패: {str(e)}")
+        logger.error(f" 스케줄 추가 실패: {str(e)}")
 
 def list_schedules(args, scheduler: InstagramScheduler) -> None:
     """업로드 일정 목록 조회"""
@@ -277,7 +277,7 @@ def cancel_schedule(args, scheduler: InstagramScheduler) -> None:
     """업로드 일정 취소"""
     try:
         if scheduler.cancel_schedule(args.id):
-            logger.info(f" 업로드 일정이 취소되었습니다. (ID: {args.id})")
+            logger.info(f"업로드 일정이 취소되었습니다. (ID: {args.id})")
         else:
             logger.error(f" 일정 취소 실패 (ID: {args.id})")
 

@@ -65,7 +65,7 @@ class InstagramUploader:
                     caption = f.read().strip()
             else:
                 tags = " ".join(account.get("default_tags", []))
-                caption = f"📱 {video_name}\n\n{tags}"
+                caption = f" {video_name}\n\n{tags}"
 
             uploads.append((video_path, caption))
 
@@ -166,7 +166,7 @@ class InstagramUploader:
                 self.upload_settings["min_delay_before_upload"],
                 self.upload_settings["max_delay_before_upload"]
             )
-            self.logger.info(f"⏳ 업로드 전 {delay:.1f}초 대기 중...")
+            self.logger.info(f" 업로드 전 {delay:.1f}초 대기 중...")
             time.sleep(delay)
 
             # 비디오 업로드
@@ -281,7 +281,7 @@ class InstagramUploader:
                 self.upload_video(
                     client,
                     schedule["video_path"],
-                    schedule["caption"] or f"📱 {os.path.splitext(os.path.basename(schedule['video_path']))[0]}"
+                    schedule["caption"] or f" {os.path.splitext(os.path.basename(schedule['video_path']))[0]}"
                 )
 
                 # 업로드 완료 처리
