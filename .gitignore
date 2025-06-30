@@ -1,2 +1,7 @@
 config.json
 .env
+schedules.json
+/accounts/*
+__pycache__/
+/logs/*
+/sessions/*

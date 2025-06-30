@@ -263,9 +263,12 @@ class InstagramUploader:
                     self.scheduler.mark_schedule_failed(schedule["id"], error_msg)
                     continue
 
-                # 비디오 파일 존재 확인
-                if not os.path.exists(schedule["video_path"]):
-                    error_msg = f"비디오 파일을 찾을 수 없음: {schedule['video_path']}"
+                # 비디오 파일 경로를 Path 객체로 변환
+                video_path = Path(schedule["video_path"])
+
+                # 비디오 파일 존재 확인 (Path 객체 사용)
+                if not video_path.exists():
+                    error_msg = f"비디오 파일을 찾을 수 없음: {str(video_path)}"
                     self.logger.error(f" {error_msg}")
                     self.scheduler.mark_schedule_failed(schedule["id"], error_msg)
                     continue
@@ -277,11 +280,12 @@ class InstagramUploader:
                     proxy=account.get("proxy")
                 )
 
-                # 비디오 업로드
+                # 비디오 업로드 (str로 변환하여 전달)
+                caption = schedule["caption"] or f" {video_path.stem}"
                 self.upload_video(
                     client,
-                    schedule["video_path"],
-                    schedule["caption"] or f" {os.path.splitext(os.path.basename(schedule['video_path']))[0]}"
+                    str(video_path),
+                    caption
                 )
 
                 # 업로드 완료 처리

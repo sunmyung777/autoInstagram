@@ -42,19 +42,40 @@ class InstagramScheduler:
 
     def _load_schedules(self) -> Dict:
         """스케줄 파일 로드"""
-        if os.path.exists(self.schedule_file):
+        schedule_path = Path(self.schedule_file)
+        if schedule_path.exists():
             try:
-                with open(self.schedule_file, 'r', encoding='utf-8') as f:
+                with open(schedule_path, 'r', encoding='utf-8-sig') as f:
                     return json.load(f)
             except json.JSONDecodeError:
                 self.logger.error("스케줄 파일이 손상되었습니다. 새로운 스케줄 파일을 생성합니다.")
                 return {"schedules": []}
+            except UnicodeError:
+                # Windows에서 인코딩 문제가 발생할 경우 대체 인코딩 시도
+                try:
+                    with open(schedule_path, 'r', encoding='cp949') as f:
+                        return json.load(f)
+                except Exception as e:
+                    self.logger.error(f"스케줄 파일 로드 실패 (인코딩 오류): {str(e)}")
+                    return {"schedules": []}
         return {"schedules": []}
 
     def _save_schedules(self) -> None:
         """스케줄 파일 저장"""
-        with open(self.schedule_file, 'w', encoding='utf-8') as f:
-            json.dump(self.schedules, f, ensure_ascii=False, indent=2)
+        schedule_path = Path(self.schedule_file)
+        try:
+            # 임시 파일에 먼저 저장
+            temp_path = schedule_path.with_suffix('.tmp')
+            with open(temp_path, 'w', encoding='utf-8-sig') as f:
+                json.dump(self.schedules, f, ensure_ascii=False, indent=2)
+
+            # 임시 파일을 실제 파일로 이동 (atomic operation)
+            temp_path.replace(schedule_path)
+        except Exception as e:
+            self.logger.error(f"스케줄 파일 저장 실패: {str(e)}")
+            if temp_path.exists():
+                temp_path.unlink()
+            raise
 
     def add_schedule(self, account_username: str, video_path: str,
                     scheduled_time: str, caption: Optional[str] = None) -> Dict:
